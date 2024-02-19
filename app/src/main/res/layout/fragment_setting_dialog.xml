@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.Dialog"
+    android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/ledcolor"
+            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:text="@string/ledcolor"
+            android:textSize="18sp"
+            android:layout_marginStart="5dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_below="@id/ledcolor"
+            android:id="@+id/red"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/red_circle"
+
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/red_check"
+            android:layout_below="@id/ledcolor"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+
+
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/green"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/green_circle"
+            android:layout_below="@id/red"
+
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/green_check"
+            android:layout_below="@id/red_check"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+
+
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/blue"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/blue_circle"
+            android:layout_below="@id/green"
+
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/blue_check"
+            android:layout_below="@id/green_check"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+
+
+            />
+        <TextView
+            android:id="@+id/sensitvity"
+            android:layout_below="@id/blue"
+            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:text="@string/sensitvity"
+            android:textSize="18sp"
+            android:layout_marginStart="5dp"
+            />
+        <TextView
+            android:id="@+id/low"
+            android:layout_below="@id/sensitvity"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="18sp"
+            android:text="@string/low"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/low_check"
+            android:layout_below="@id/sensitvity"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+
+
+            />
+        <TextView
+            android:id="@+id/normal"
+            android:layout_below="@id/low"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="18sp"
+            android:text="@string/normal"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/normal_check"
+            android:layout_below="@id/low_check"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+            />
+        <TextView
+            android:id="@+id/high"
+            android:layout_below="@id/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="18sp"
+            android:text="@string/high"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/high_check"
+            android:layout_below="@id/normal_check"
+            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_marginStart="200dp"
+
+
+            />
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

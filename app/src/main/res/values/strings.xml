@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Kapásjelző</string>
+    <string name="ble_not_supported">BLE nem támogatott</string>
+    <string name="reel_data">Kapás:</string>
+    <string name="pressure">Légnyomás:</string>
+    <string name="biteswitch">Kapásjelző bekapcsolása.</string>
+    <string name="label_state">Állapot:</string>
+    <string name="catchmain">KAPÁS!</string>
+    <string name="connected">Csatlakozva</string>
+    <string name="disconnected">Lecsatlakozva</string>
+    <string name="title_devices">Eszközök:</string>
+    <string name="error_bluetooth_not_supported">Bluetooth nem támogatott.</string>
+    <string name="allow">Engedélyezés</string>
+    <string name="not_allow">Megtagadás</string>
+    <string name="unknown_device">Ismeretlen eszköz</string>
+    <string name="unknown_characteristic">Ismeretlen Karakterisztika</string>
+    <string name="unknown_service">Ismeretlen Service</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <string name="no_data">Nincs adat</string>
+    <string name="home">Kapásjelző</string>
+    <string name="catches">Kapások</string>
+    <string name="kilo">kg</string>
+    <string name="temp">temp</string>
+    <string name="hintpressure">pressure</string>
+    <string name="date">date</string>
+    <string name="sensitvity">Érzékenység:</string>
+    <string name="low">Alacsony</string>
+    <string name="normal">Közepes</string>
+    <string name="high">Magas</string>
+    <string name="ledcolor">LED színválasztás:</string>
+
+    <!-- Menu items -->
+    <string name="menu_connect">Csatlakozás</string>
+    <string name="menu_disconnect">Lecsatlakozás</string>
+    <string name="menu_scan">Keresés</string>
+    <string name="menu_stop">Állj</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+</resources>
