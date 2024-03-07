@@ -29,6 +29,8 @@
     <string name="normal">Közepes</string>
     <string name="high">Magas</string>
     <string name="ledcolor">LED színválasztás:</string>
+    <string name="confirm">Új próbálkozás</string>
+    <string name="exit">Kilépés</string>
 
     <!-- Menu items -->
     <string name="menu_connect">Csatlakozás</string>

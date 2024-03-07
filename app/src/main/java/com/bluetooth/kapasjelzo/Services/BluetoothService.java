@@ -1,6 +1,6 @@
 package com.bluetooth.kapasjelzo.Services;
 
-import android.Manifest;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -14,14 +14,15 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
+
+
 
 import com.bluetooth.kapasjelzo.GattAttributes;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +44,10 @@ public class BluetoothService extends Service {
     private String bleAddress;
     public final static UUID UUID_Bite_Alarm = UUID.fromString(GattAttributes.Bite_Alarm_CHARACTERISTIC);
 
+
     private final BluetoothGattCallback bleCallback = new BluetoothGattCallback() {
+
+
         @SuppressLint("MissingPermission")
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -54,6 +58,8 @@ public class BluetoothService extends Service {
                 broadcast(connectionChange);
                 Log.i(TAG, "Csatlakozva a GATT szerverhez.");
                 Log.i(TAG, "Szolgáltatás keresése:" + bleGatt.discoverServices());
+
+
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 connectionChange = gattDisconnected;
@@ -138,6 +144,7 @@ public class BluetoothService extends Service {
 
         return true;
     }
+
 
     @SuppressLint("MissingPermission")
     public boolean connect(final String address) {

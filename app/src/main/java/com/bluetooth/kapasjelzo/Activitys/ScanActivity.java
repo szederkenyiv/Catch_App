@@ -13,7 +13,9 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,55 +31,132 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.bluetooth.kapasjelzo.R;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ScanActivity extends AppCompatActivity{
+public class ScanActivity extends AppCompatActivity {
     private Handler bleHandler;
     private BluetoothAdapter bleAdapter;
     private LeDeviceListAdapter bleDeviceListAdapter;
     private boolean bleScan;
     private static final long scanPeriod = 10000;
     private static final int enableBl = 1;
+    private final String[] REQUIRED_PERMISSIONS_SDKMAX_30 = new String[]{"android.permission.ACCESS_FINE_LOCATION"};
+    private final String[] REQUIRED_PERMISSIONS_SDKMIN_31 = new String[]{"android.permission.BLUETOOTH_SCAN","android.permission.BLUETOOTH_CONNECT"};
+
+
     ListView blelist;
 
+    private boolean isPermissionsGranted(){
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.S){
+            for(String permission : REQUIRED_PERMISSIONS_SDKMAX_30){
+
+                if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        for(String permission : REQUIRED_PERMISSIONS_SDKMIN_31){
+
+                if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+        }
+
+        return true;
 
 
-
-    private boolean isLocationEnabled(LocationManager locationManager){
-       return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
     }
-    private void alertDialog(){
-        new AlertDialog.Builder(this).setTitle("Hely adatok bekapcsolása")
-                .setMessage("Az eszköz megtalálásához kérem kapcsolja be a helyadatokat.")
-                .setPositiveButton(R.string.allow, (dialog, which) -> startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
-                .setNegativeButton(R.string.not_allow, (dialog, which) -> finish()).show();
+    private void askPermission(){
+     if(Build.VERSION.SDK_INT<Build.VERSION_CODES.S){
+         if (!(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)) {
+             requestPermissionLauncher.launch(
+                     Manifest.permission.ACCESS_FINE_LOCATION);
+         }
+     }
+
+     if(Build.VERSION.SDK_INT> Build.VERSION_CODES.R){
+         if(!(ContextCompat.checkSelfPermission(this,Manifest.permission.BLUETOOTH_SCAN)==PackageManager.PERMISSION_GRANTED)){
+             requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_SCAN);
+             if(!(ContextCompat.checkSelfPermission(this,Manifest.permission.BLUETOOTH_CONNECT)==PackageManager.PERMISSION_GRANTED)){
+                 requestPermissionLauncher.launch(Manifest.permission.BLUETOOTH_CONNECT);
+             }
+         }
+     }
+    }
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+
+                }
+                else{
+                    new AlertDialog.Builder(this).setTitle("Valami nem stimmel...").setCancelable(false)
+                            .setMessage("A szolgáltatás bekapcsolása nélkül nem tudsz továbblépni!")
+                            .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    askPermission();
+                                }
+                            })
+                            .setNegativeButton(R.string.exit, (dialog, which) -> finish()).show();
+                }
+            });
+
+
+
+
+
+    private boolean isLocationEnabled(LocationManager locationManager) {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
     }
 
+
+
+
+    @SuppressLint("MissingPermission")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!isPermissionsGranted()){
+            askPermission();
+        }
         setContentView(R.layout.listitem_device);
-        blelist=findViewById(R.id.list);
+        blelist = findViewById(R.id.list);
         bleDeviceListAdapter = new LeDeviceListAdapter();
         blelist.setAdapter(bleDeviceListAdapter);
-      Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_devices);
-      getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1fb4d9")));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this,R.color.bar));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.title_devices);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1fb4d9")));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bar));
 
-        if(!(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
-                &&ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED))
-        {
-            requestPermissions( new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-        }
+
+
         bleHandler = new Handler();
 
         // Use this check to determine whether BLE is supported on the device.  Then you can
@@ -108,6 +187,8 @@ public class ScanActivity extends AppCompatActivity{
             intent.putExtra(ControlActivity.EXTRAS_DEVICE_NAME, device.getName());
             intent.putExtra(ControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
             if (bleScan) {
+
+
                 bluetoothLeScanner.startScan(bleScanCallback);
                 bleScan = false;
             }
@@ -115,6 +196,9 @@ public class ScanActivity extends AppCompatActivity{
         });
 
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -144,8 +228,8 @@ public class ScanActivity extends AppCompatActivity{
     }
 
 
-    @SuppressLint("MissingPermission")
-    @RequiresApi(api = Build.VERSION_CODES.S)
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -155,18 +239,51 @@ public class ScanActivity extends AppCompatActivity{
         if (!bleAdapter.isEnabled()) {
 
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-
             //startActivityForResult(enableBtIntent, enableBl);
             someActivityResultLauncher.launch(enableBtIntent);
         }
         if(!isLocationEnabled(locationManager)){
-            alertDialog();
+            //alertDialog();
+           LocationRequest locationRequest=new LocationRequest.Builder(0L)
+                   .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY).build();
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+            builder.setAlwaysShow(true);
+            Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(this)
+                    .checkLocationSettings(builder.build());
+
+            result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+                @Override
+                public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                    try {
+                        task.getResult(ApiException.class);
+                    } catch (ApiException ex) {
+                        switch (ex.getStatusCode()) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                try {
+                                    ResolvableApiException resolvableApiException =
+                                            (ResolvableApiException) ex;
+                                    resolvableApiException
+                                            .startResolutionForResult(ScanActivity.this,
+                                                    1);
+                                } catch (IntentSender.SendIntentException e) {
+
+                                }
+                                break;
+                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+
+                                break;
+                        }
+                    }
+                }
+            });
         }
 
         // Initializes list view adapter.
         bleDeviceListAdapter = new LeDeviceListAdapter();
         blelist.setAdapter(bleDeviceListAdapter);
-        scanLeDevice(true);
+        if(isPermissionsGranted()) {
+            scanLeDevice(true);
+        }
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher=registerForActivityResult(
@@ -188,14 +305,26 @@ public class ScanActivity extends AppCompatActivity{
 
 
 
+
+
+
+
     @SuppressLint("MissingPermission")
     private void scanLeDevice(final boolean enable) {
+
         final BluetoothLeScanner bleLeScanner = bleAdapter.getBluetoothLeScanner();
         if (enable) {
             // Stops scanning after a pre-defined scan period.
             bleHandler.postDelayed(() -> {
                 bleScan = false;
-                bleLeScanner.stopScan(bleScanCallback);
+
+                if(isPermissionsGranted()){
+                    bleLeScanner.stopScan(bleScanCallback);
+                }
+                else {
+                    askPermission();
+                }
+
                 invalidateOptionsMenu();
             }, scanPeriod);
 
@@ -208,7 +337,6 @@ public class ScanActivity extends AppCompatActivity{
             filters.add(filter);
             bleLeScanner.startScan(filters,settings,bleScanCallback);
         } else {
-            bleScan = false;
             bleLeScanner.stopScan(bleScanCallback);
         }
        invalidateOptionsMenu();
@@ -254,6 +382,7 @@ public class ScanActivity extends AppCompatActivity{
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+
             ViewHolder viewHolder;
             // General ListView optimization code.
             if (view == null) {
@@ -267,6 +396,7 @@ public class ScanActivity extends AppCompatActivity{
             }
 
             BluetoothDevice device = bleDevices.get(i);
+
 
             @SuppressLint("MissingPermission") final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0)
