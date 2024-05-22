@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.bluetooth.kapasjelzo.Activitys;
 
 import android.Manifest;
@@ -27,8 +42,8 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-import com.bluetooth.kapasjelzo.CatchSQLite.CatchRoom;
-import com.bluetooth.kapasjelzo.CatchSQLite.CatchViewModel;
+import com.bluetooth.kapasjelzo.CatchRoomDB.CatchRoom;
+import com.bluetooth.kapasjelzo.CatchRoomDB.CatchViewModel;
 import com.bluetooth.kapasjelzo.Fragments.CatchesFragment;
 import com.bluetooth.kapasjelzo.Fragments.Dialog;
 import com.bluetooth.kapasjelzo.Fragments.EditDialog;
@@ -394,7 +409,6 @@ public class ControlActivity extends AppCompatActivity implements Dialog.CatchDi
     }
 
     private void displayData(String data) {
-
         if(data.contains("&")) {
             String[] part = data.split("&");
             celsius = part[0] + " \u2103";
@@ -404,19 +418,14 @@ public class ControlActivity extends AppCompatActivity implements Dialog.CatchDi
             mainFragment.updateDataField(celsius);
             mainFragment.updatePressureDataField(strPressure);
         }
-
         else {
             mainFragment.animationReelDataField();
             if (data.equals("true") && mainFragment.switch2State()) {
-
-                Log.d("myTag", data);
                 Intent myService2 = new Intent(ControlActivity.this, AlarmService.class);
                 startService(myService2);
                 soundPool.stop(sound);
             }
         }
-
-        Log.d(TAG,data);
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.

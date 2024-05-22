@@ -7,6 +7,7 @@
     android:background="@drawable/lake"
     android:orientation="vertical"
     tools:context=".Fragments.MainFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/no_data"
+            android:text="@string/temperature_nodata"
             android:textColor="@color/gray"
             android:textSize="32sp" />
 
@@ -65,10 +66,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/no_data"
+            android:text="@string/pressure_nodata"
             android:textColor="@color/gray"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,40 +82,43 @@
             android:id="@+id/Reeldata_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:gravity="center"
+            android:letterSpacing="0.2"
             android:text="@string/catchmain"
             android:textColor="@color/red"
-            android:textSize="36sp"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:letterSpacing="0.2"
-            android:gravity="center"/>
+            android:textSize="36sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/bitech"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:minHeight="48dp"
             android:text="@string/biteswitch"
             android:textColor="@color/gray"
             android:textOff="@string/off"
             android:textOn="@string/on"
-            android:textSize="20sp"
-            android:layout_marginTop="60dp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:contentDescription="button"

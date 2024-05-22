@@ -1,5 +1,4 @@
-package com.bluetooth.kapasjelzo.CatchSQLite;
-import android.graphics.Bitmap;
+package com.bluetooth.kapasjelzo.CatchRoomDB;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

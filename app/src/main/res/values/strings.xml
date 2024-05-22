@@ -17,7 +17,8 @@
     <string name="unknown_service">Ismeretlen Service</string>
     <string name="on">on</string>
     <string name="off">off</string>
-    <string name="no_data">Nincs adat</string>
+    <string name="pressure_nodata">Nincs légnyomás adat</string>
+    <string name="temperature_nodata">Nincs hőmérséklet adat</string>
     <string name="home">Kapásjelző</string>
     <string name="catches">Kapások</string>
     <string name="kilo">kg</string>
@@ -29,6 +30,8 @@
     <string name="normal">Közepes</string>
     <string name="high">Magas</string>
     <string name="ledcolor">LED színválasztás:</string>
+    <string name="confirm">Új próbálkozás</string>
+    <string name="exit">Kilépés</string>
 
     <!-- Menu items -->
     <string name="menu_connect">Csatlakozás</string>
