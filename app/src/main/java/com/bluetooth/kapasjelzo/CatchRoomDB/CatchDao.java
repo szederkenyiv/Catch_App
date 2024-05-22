@@ -1,4 +1,4 @@
-package com.bluetooth.kapasjelzo.CatchSQLite;
+package com.bluetooth.kapasjelzo.CatchRoomDB;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

@@ -16,16 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.fragment.app.DialogFragment;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bluetooth.kapasjelzo.CatchSQLite.CatchRoom;
+import com.bluetooth.kapasjelzo.CatchRoomDB.CatchRoom;
 import com.bluetooth.kapasjelzo.R;
 public class EditDialog extends AppCompatDialogFragment {
     private EditText editTextKilogramm;

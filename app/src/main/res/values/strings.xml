@@ -17,7 +17,8 @@
     <string name="unknown_service">Ismeretlen Service</string>
     <string name="on">on</string>
     <string name="off">off</string>
-    <string name="no_data">Nincs adat</string>
+    <string name="pressure_nodata">Nincs légnyomás adat</string>
+    <string name="temperature_nodata">Nincs hőmérséklet adat</string>
     <string name="home">Kapásjelző</string>
     <string name="catches">Kapások</string>
     <string name="kilo">kg</string>

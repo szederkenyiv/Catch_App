@@ -135,8 +135,8 @@ public void updateConnectionState(int value){
     this.connectionState.setText(value);
 }
 public void clearText(){
-    this.dataField.setText(R.string.no_data);
-    this.pressureDataField.setText(R.string.no_data);
+    this.dataField.setText(R.string.temperature_nodata);
+    this.pressureDataField.setText(R.string.pressure_nodata);
     this.switch2.setChecked(false);
 }
 public boolean switch2State(){

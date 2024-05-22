@@ -1,9 +1,6 @@
-package com.bluetooth.kapasjelzo.CatchSQLite;
+package com.bluetooth.kapasjelzo.CatchRoomDB;
 
 import android.app.Application;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 

@@ -7,7 +7,6 @@
     tools:context=".Fragments.CatchesFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyleview"
-        android:background="@drawable/lake"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/fragment_catches"/>
